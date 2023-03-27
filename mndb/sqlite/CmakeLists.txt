@@ -1,0 +1,5 @@
+add_library(sqlite
+        ../sqlite3.h
+        ../sqlite3.c
+  )
+target_include_directories(sqlite PUBLIC ./)

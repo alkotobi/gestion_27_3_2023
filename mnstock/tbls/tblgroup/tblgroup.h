@@ -1,0 +1,35 @@
+//
+// Created by merhab on {today}.
+//
+#pragma once
+#include "mnsql.h"
+#include "mnmetadata.h"
+typedef struct {
+    tbl_super super;
+    mnmetadata* id;
+    mnmetadata* grp_name;
+    mnmetadata* can_login;
+    mnmetadata* can_edit_group;
+}tblgroup_meta;
+tblgroup_meta *tblgroup_meta_new();
+tblgroup_meta *tblgroup_meta_init(tblgroup_meta * grp);
+tblgroup_meta *tblgroup_meta_clean(tblgroup_meta * grp);
+void tblgroup_meta_free(tblgroup_meta ** grp_hld);
+void tblgroup_meta_clean_free(tblgroup_meta ** grp_hld);
+
+
+typedef struct {
+    mnvariantList var_list;
+    mnvariant* id;
+    mnvariant* grp_name;
+    mnvariant* can_login;
+    mnvariant* can_edit_group;
+}tblgroup_record;
+tblgroup_record *tblgroup_record_init(tblgroup_record *record,    mnvariant* id,
+                                      mnvariant* grp_name,
+                                      mnvariant* can_login,
+                                      mnvariant* can_edit_group);
+tblgroup_record *tblgroup_record_refresh(tblgroup_record * record);
+tblgroup_record *tblgroup_record_clean(tblgroup_record * record);
+void tblgroup_record_free(tblgroup_record ** record_hld);
+tblgroup_record * tblgroup_record_new();

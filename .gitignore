@@ -1,0 +1,9 @@
+/python/mnsstock/myenv/bin/
+/python/mnsstock/myenv/include/site/python3.8/greenlet/
+/python/mnsstock/myenv/lib/python3.8/site-packages/
+/python/mnsstock/myenv/pyvenv.cfg
+/.idea/
+/_build/
+/build/
+/cmake-build-debug/
+/CMakeLists.txt.user
