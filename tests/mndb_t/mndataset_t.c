@@ -21,7 +21,7 @@ char mndataset_t() {
     test(1,"testing mndataset_create_table...\n");
     tbluser_record * rec=tbluser_record_init(0, VAR_BI(-1), VAR_S("nour"),
                                              VAR_S("noor"), VAR_S("123"), VAR_BI(-1));
-    size_t ind=mndataset_insert(dataset,&rec->var_list);
+    size_t ind=mndataset_insert(dataset,&rec->super.var_list);
     rec->id= VAR_BI(ind);
     tbluser_record_refresh_list(rec);
     mnrecordset_add(dataset->recordset, (mnrecord *) rec);

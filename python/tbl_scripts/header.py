@@ -30,9 +30,15 @@ def struct_meta_methods():
            void_name + struct_meta_name + "_clean_free({} {}_hld);\n\n\n".format(struct_meta_ptr_hld, meta_param_name)
     return str1
 
-
+# def struct_record_super():
+#     str0=f"typedef struct {{\n" \
+#          f"mnvariantList var_list;\n" \
+#          f"void(*refresh_list)(void*);\n" \
+#          f"}}record_super;\n"
+#     return str0
 def struct_record():
-    str0 = "typedef struct {\n    mnvariantList var_list;\n" + \
+    str0 = "typedef struct {\n    //mnvariantList var_list;\n" \
+           "record_super super;\n" + \
            '\n'.join(["    mnvariant* {};".format(d['name']) for d in fields]) + \
            "\n}}{};\n".format(struct_record_name)
     return str0
@@ -41,7 +47,7 @@ def struct_record():
 def struct_record_methods():
     str0 = struct_record_ptr + struct_record_name + "_init(" + struct_record_ptr + record_param_name + ",{});\n". \
         format(',\n'.join(["    mnvariant* {}".format(d['name']) for d in fields])) + \
-           struct_record_ptr + struct_record_name + "_refresh_list({} {});\n".format(struct_record_ptr, record_param_name) + \
+           f"{void_name}  {struct_record_name}_refresh_list" + "({} *{}_);\n".format(void_name, record_param_name) + \
            struct_record_ptr + struct_record_name + "_clean({} {});\n".format(struct_record_ptr, record_param_name) + \
            void_name + struct_record_name + "_free({} {}_hld);\n".format(struct_record_ptr_hld,
                                                                                  record_param_name)+\
@@ -49,7 +55,7 @@ def struct_record_methods():
             f"mnvariant * {struct_record_name}_list_set_field_at(" \
             f"{struct_record_ptr} {record_param_name},mnvariant *field,tbl{table_name}_fields_index ind);\n" \
             f"mnvariant * {struct_record_name}_list_set_field_at_clean_ex(" \
-            f"{struct_record_ptr} {record_param_name},mnvariant *field,tbl{table_name}_fields_index ind);\n"
+            f"{void_name} *{record_param_name}_,mnvariant *field,char ind);\n"
     return str0
 
 def setters():

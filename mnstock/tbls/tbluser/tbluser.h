@@ -23,8 +23,10 @@ void tbluser_meta_free(tbluser_meta **user_hld);
 void tbluser_meta_clean_free(tbluser_meta **user_hld);
 char* tbluser_create_table_sql(tbluser_meta* user);
 
+
 typedef struct {
-    mnvariantList var_list;
+    record_super super;
+    //mnvariantList var_list;
     mnvariant* id;
     mnvariant* title;
     mnvariant* usr;
@@ -36,9 +38,9 @@ tbluser_record * tbluser_record_init(tbluser_record *record,
                                      mnvariant *id, mnvariant *title,
                                      mnvariant *usr, mnvariant *pass,
                                      mnvariant *id_group);
-tbluser_record* tbluser_record_refresh_list(tbluser_record* record);
+void tbluser_record_refresh_list(void* record);
 tbluser_record* tbluser_record_new();
 tbluser_record* tbluser_record_clean(tbluser_record* record);
 void tbluser_record_free(tbluser_record** rec_hld);
-mnvariant *tbluser_record_list_set_field_at_clean_ex(tbluser_record *record, mnvariant *field, tbluser_fields_index ind);
+mnvariant *tbluser_record_list_set_field_at_clean_ex(void *record_, mnvariant *field, char ind);
 mnvariant* tbluser_record_list_set_field_at(tbluser_record* record,mnvariant* field,tbluser_fields_index ind);

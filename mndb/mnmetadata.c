@@ -127,3 +127,11 @@ mncstringList *mnmetadata_list_fld_names_list_generated(mnmetadata_list *list) {
 mnmetadata_list *mnmetadata_list_clean(mnmetadata_list *arr) {
     return mnarray_clean(arr, (mnfree_fnc) mnmetadata_clean_free);
 }
+
+char tbl_super_autoinc_index(tbl_super *super) {
+    for (size_t i = 0; i <super->meta_list->count ; ++i) {
+        mnmetadata* meta = mnmetadata_list_item_at(super->meta_list,i);
+        if (meta->is_autoinc) return (char)i;
+    }
+    return -1;
+}

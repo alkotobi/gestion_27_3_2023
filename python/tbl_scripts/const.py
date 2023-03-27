@@ -31,7 +31,7 @@ fields = [{lbl_name: "id", lbl_type: lbl_type_int, lbl_must_not_nul: 1, lbl_is_a
            lbl_is_primary_key: 1, lbl_is_unique: 1},
           {lbl_name: "grp_name", lbl_type: lbl_type_str, lbl_must_not_nul: 1, lbl_is_auto_inc: 0, lbl_default_val: 0,
            lbl_is_primary_key: 0, lbl_is_unique: 0},
-          {lbl_name: "can_login", lbl_type: lbl_type_int, lbl_must_not_nul: 1, lbl_is_auto_inc: 0, lbl_default_val: 1,
+          {lbl_name: "can_login", lbl_type: lbl_type_int, lbl_must_not_nul: 1, lbl_is_auto_inc: 0, lbl_default_val: 0,
            lbl_is_primary_key: 0, lbl_is_unique: 0},
           {lbl_name: "can_edit_group", lbl_type: lbl_type_int, lbl_must_not_nul: 1, lbl_is_auto_inc: 0,
            lbl_default_val: 0, lbl_is_primary_key: 0, lbl_is_unique: 0}
