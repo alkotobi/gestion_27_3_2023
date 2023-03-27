@@ -9,11 +9,11 @@ lbl_type_int="Int"
 lbl_type_str="CString"
 lbl_type_dbl="Double"
 lbl_type_BINT="Big_int"
-
 import datetime
 
-today = datetime.date.today()
 table_name = "group"
+lbl_fields_count =f"tbl{table_name}_fields_count"
+today = datetime.date.today()
 header = "tbl" + table_name + ".h"
 source = "tbl" + table_name + ".c"
 struct_meta_name = "tbl" + table_name + "_meta"
@@ -36,7 +36,7 @@ fields = [{lbl_name: "id", lbl_type: lbl_type_int, lbl_must_not_nul: 1, lbl_is_a
           {lbl_name: "can_edit_group", lbl_type: lbl_type_int, lbl_must_not_nul: 1, lbl_is_auto_inc: 0,
            lbl_default_val: 0, lbl_is_primary_key: 0, lbl_is_unique: 0}
           ]
-
+fields_count=len(fields)
 def intro():
     str1 = "//\n" + \
            "// Created by merhab on {today}.\n" + \

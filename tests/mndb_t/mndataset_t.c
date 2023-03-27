@@ -23,7 +23,7 @@ char mndataset_t() {
                                              VAR_S("noor"), VAR_S("123"), VAR_BI(-1));
     size_t ind=mndataset_insert(dataset,&rec->var_list);
     rec->id= VAR_BI(ind);
-    tbluser_record_refresh(rec);
+    tbluser_record_refresh_list(rec);
     mnrecordset_add(dataset->recordset, (mnrecord *) rec);
 
     return 1;

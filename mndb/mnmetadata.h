@@ -48,6 +48,8 @@ typedef mnvariant mnfield;
 typedef mnarray mnmetadata_list;
 mnmetadata_list* mnmetadata_list_init(mnmetadata_list* arr);//tested
 mnmetadata* mnmetadata_list_add(mnmetadata_list* arr, mnmetadata* fld_meta);//tested
+mnmetadata* mnmetadata_list_set_item_at(mnmetadata_list *arr, mnmetadata *fld_meta,size_t ind);
+mnmetadata* mnmetadata_list_set_item_at_clean_ex(mnmetadata_list *arr, mnmetadata *fld_meta,size_t ind);
 mnmetadata* mnmetadata_list_item_at(mnmetadata_list* arr, size_t index);
 void mnmetadata_list_clean_free(void** arr_hld);
 mnmetadata_list* mnmetadata_list_clean(mnmetadata_list* arr);

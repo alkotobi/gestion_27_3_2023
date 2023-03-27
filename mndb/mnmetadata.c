@@ -59,6 +59,15 @@ mnmetadata* mnmetadata_list_add(mnmetadata_list *arr, mnmetadata *fld_meta) {
     return (mnmetadata*) mnarray_add(arr, (void*) fld_meta);
 }
 
+mnmetadata* mnmetadata_list_set_item_at(mnmetadata_list *arr, mnmetadata *fld_meta,size_t ind) {
+    arr->array[ind]=fld_meta;
+    return fld_meta;
+}
+mnmetadata* mnmetadata_list_set_item_at_clean_ex(mnmetadata_list *arr, mnmetadata *fld_meta,size_t ind) {
+    if(mnmetadata_list_item_at(arr,ind)) mnmetadata_clean_free((mnmetadata **) &arr->array[ind]);
+    arr->array[ind]=fld_meta;
+    return fld_meta;
+}
 mnmetadata *mnmetadata_list_item_at(mnmetadata_list *arr, size_t index) {
     return (mnmetadata*) mnarray_item_at(arr, index);
 }

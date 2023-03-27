@@ -19,10 +19,10 @@ tbluser_meta *tbluser_meta_init(tbluser_meta *user) {
     if (!user) user = tbluser_meta_new();
     user->super.meta_list=mnmetadata_list_init(0);
     user->super.table_name ="usr";
-    user->usr= mnmetadata_list_add(user->super.meta_list,
+    user->usr= mnmetadata_list_set_item_at(user->super.meta_list,
                                    mnmetadata_init(0, str_cpy("user"),
                                                    CString,1,1,
-                                                   0,0,0));
+                                                   0,0,0),Usr);
     user->title= mnmetadata_list_add(user->super.meta_list,
                                      mnmetadata_init(0, str_cpy("title"),
                                                      CString,1,0,
@@ -67,10 +67,12 @@ tbluser_record *
 tbluser_record_init(tbluser_record *record, mnvariant *id, mnvariant *title,
                     mnvariant *usr, mnvariant *pass,
                     mnvariant *id_group) {
-    if (!record) record=tbluser_record_new();
-    mnvariantList_init(&record->var_list);
+    if (!record) record=tbluser_record_new();//changing
+    mnarray_init_v0(&record->var_list,tbluser_field_count);
+    //mnvariantList_init(&record->var_list);
     record->id = id;
-    mnvariantList_add(&record->var_list,record->id);
+    mnvariantList_set_item_at(&record->var_list,record->id,Id);
+
     record->title = title;
     mnvariantList_add(&record->var_list,record->title);
     record->usr= usr;
@@ -81,7 +83,7 @@ tbluser_record_init(tbluser_record *record, mnvariant *id, mnvariant *title,
     mnvariantList_add(&record->var_list,record->id_group);
     return record;
 }
-tbluser_record* tbluser_record_refresh(tbluser_record *record) {
+tbluser_record* tbluser_record_refresh_list(tbluser_record *record) {
     mnvariantList_clean(&record->var_list);
     mnvariantList_add(&record->var_list,record->id);
     mnvariantList_add(&record->var_list,record->title);
@@ -117,4 +119,63 @@ void tbluser_record_free(tbluser_record **rec_hld) {
     *rec_hld=0;
 }
 
+mnvariant *tbluser_record_list_set_field_at_clean_ex(tbluser_record *record, mnvariant *field, tbluser_fields_index ind) {
+    mnvariantList* list= &record->var_list;
+    if (list->array[ind]) mnvariant_clean_free((mnvariant **) &list->array[ind]);
+    list->array[ind] = field;
+    switch (ind) {
 
+        case Id:
+            record->id = field;
+            break;
+        case Title:
+            record->title =field;
+            break;
+        case Usr:
+            record->usr = field;
+            break;
+        case Pass:
+            record->pass = field;
+            break;
+        case Id_group:
+            record->id_group = field;
+            break;
+        default:
+            mnassert(0);
+    }
+    return field;
+}
+
+mnvariant *tbluser_record_list_set_field_at(tbluser_record *record, mnvariant *field, tbluser_fields_index ind) {
+    mnvariantList* list= &record->var_list;
+    //if (list->array[ind]) mnvariant_clean_free((mnvariant **) &list->array[ind]);
+    list->array[ind] = field;
+    switch (ind) {
+
+        case Id:
+            record->id = field;
+            break;
+        case Title:
+            record->title =field;
+            break;
+        case Usr:
+            record->usr = field;
+            break;
+        case Pass:
+            record->pass = field;
+            break;
+        case Id_group:
+            record->id_group = field;
+            break;
+        default:
+            mnassert(0);
+    }
+    return field;
+}
+
+
+void tbluser_record_set_id(tbluser_record* record, mnvariant* id){
+    mnvariant_clean_free(&record->id);
+    record->id=id;
+    tbluser_record_refresh_list(record);
+}
