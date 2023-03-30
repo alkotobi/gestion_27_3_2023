@@ -17,12 +17,12 @@ tbluser_meta *tbluser_meta_new() {
 
 tbluser_meta *tbluser_meta_init(tbluser_meta *user) {
     if (!user) user = tbluser_meta_new();
-    user->super.meta_list=mnmetadata_list_init(0);
+    user->super.meta_list=mnarray_init_fill_with_0(0,tbluser_field_count);
     user->super.table_name ="usr";
-    user->usr= mnmetadata_list_set_item_at(user->super.meta_list,
+    user->usr= mnmetadata_list_add(user->super.meta_list,
                                    mnmetadata_init(0, str_cpy("user"),
                                                    CString,1,1,
-                                                   0,0,0),Usr);
+                                                   0,0,0));
     user->title= mnmetadata_list_add(user->super.meta_list,
                                      mnmetadata_init(0, str_cpy("title"),
                                                      CString,1,0,

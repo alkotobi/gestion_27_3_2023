@@ -28,6 +28,7 @@ void mndataset_free(mndataset** dataset_hld);
 char mndataset_create_table(mndataset* dataset);//tested
 mndataset *mndataset_get_data(mndataset *dataset);
 size_t mndataset_insert(mndataset* dataset,mnvariantList * vals);
+size_t mndataset_insert_v0(mndataset* dataset,record_super * record);
 
 
 

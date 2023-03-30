@@ -63,12 +63,13 @@ typedef struct {
     mnmetadata_list* meta_list;
     char* table_name;
 }tbl_super;
-char tbl_super_autoinc_index(tbl_super* super);
+size_t tbl_super_autoinc_index(tbl_super* super);
 typedef struct {
     mnvariantList var_list;
     void(*refresh_list)(void*);
     mnvariant* (*var_list_set_field_at)(void*,mnvariant*,char);
 }record_super;
+
 #ifdef __cplusplus
 }
 #endif

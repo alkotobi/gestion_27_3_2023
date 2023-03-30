@@ -20,10 +20,11 @@ void tblgroup_meta_free(tblgroup_meta ** grp_hld);
 void tblgroup_meta_clean_free(tblgroup_meta ** grp_hld);
 
 
-typedef struct {
-    mnvariantList var_list;
-    void(*refresh_list)(void*);
-}record_super;
+//typedef struct {
+//    mnvariantList var_list;
+//    void(*refresh_list)(void*);
+//}record_super;
+
 typedef struct {
     //mnvariantList var_list;
     record_super super;

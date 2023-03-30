@@ -10,6 +10,17 @@ mnvariantList* mnvariantList_init(mnvariantList* var_list)
     return mnarray_init(var_list);
 }
 
+mnvariant* mnvariantList_set_item_at_clean_ex(mnvariantList* var_list,mnvariant* var,size_t ind){
+    if (mnvariantList_item_at(var_list,ind)) mnvariant_clean_free((mnvariant **) &(var_list->array[ind]));
+    else var_list->count++;
+    var_list->array[ind] = var;
+    return var;
+}
+mnvariant* mnvariantList_set_item_at(mnvariantList* var_list,mnvariant* var,size_t ind){
+    if (!var_list->array[ind]) var_list->count++;
+    var_list->array[ind] = var;
+    return var;
+}
 mnvariant* mnvariantList_add(mnvariantList* var_list,mnvariant* var)
 {
     return (mnvariant*) mnarray_add(var_list,var);

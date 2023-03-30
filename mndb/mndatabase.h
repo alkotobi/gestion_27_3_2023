@@ -42,7 +42,7 @@ mndatabase* mndatabase_new();
 mndatabase *mndatabase_init(mndatabase *database, db_drivers driver, void *connection_params);//tested
 mndatabase* mndatabase_init_sqlite(mndatabase* db,char* db_path);//tested
 mndatabase* mndatabase_clean(mndatabase* database);
-static char mndatabase_bind_params_and_exec(mndatabase *db, mnvariantList *params, char *sql);
+char mndatabase_bind_params_and_exec(mndatabase *db, mnvariantList *params, char *sql);
 mnrecordset* mndatabase_bind_params_and_get_data(mndatabase *db, mnvariantList *params, char *sql);
 #ifdef __cplusplus
 }

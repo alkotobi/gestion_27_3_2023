@@ -17,7 +17,8 @@ void mnvariantList_free_v1(mnvariantList* var_list);
 mnvariant* mnvariantList_item_at(mnvariantList* var_list,size_t ind);
 void mnvariantList_printf(mnvariantList* list);
 void mnvariantList_clean_free(mnvariantList** list_hld);
-
+mnvariant* mnvariantList_set_item_at_clean_ex(mnvariantList* var_list,mnvariant* var,size_t ind);
+mnvariant* mnvariantList_set_item_at(mnvariantList* var_list,mnvariant* var,size_t ind);
 #ifdef __cplusplus
 }
 #endif

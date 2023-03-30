@@ -87,7 +87,7 @@ mnrecordset *mndatabase_get_data(mndatabase *self, const char *sql) {
 
 
 //TODO:test mndatabase_bind_params_and_exec
-static char mndatabase_bind_params_and_exec(mndatabase *db, mnvariantList *params, char *sql) {
+ char mndatabase_bind_params_and_exec(mndatabase *db, mnvariantList *params, char *sql) {
     if (db->driver == SQLITE) {
         sqlite3 *sqlitedb = ((sqlite3 *) db->connection);
         return mnsqlie_bind_params_and_exec(sqlitedb,params,sql);

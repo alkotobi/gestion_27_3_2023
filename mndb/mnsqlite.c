@@ -200,7 +200,7 @@ char mnsqlie_bind_params_and_exec(sqlite3 *db, mnvariantList *params, char *sql)
     res = sqlite3_step(rds);
     if (res == MN_DONE) {
         sqlite3_finalize(rds);
-        sqlite3_last_insert_rowid(sqlitedb);
+        //sqlite3_last_insert_rowid(sqlitedb);
         return 1;
     }
     sqlite3_finalize(rds);

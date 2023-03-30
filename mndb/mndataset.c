@@ -17,6 +17,7 @@ mndataset *mndataset_init(mndataset *dataset, tbl_super *tblsuper, mndatabase *d
     dataset->tblsuper=tblsuper;
     dataset->db=db;
     dataset->sql=msql;
+    dataset->recordset = mnrecordset_init(0);
     return dataset;
 }
 
@@ -90,4 +91,12 @@ size_t mndataset_insert(mndataset *dataset, mnvariantList *vals) {
     mnvariantList_clean_free(&vals_list);
     mncstringList_clean_free(&names_list);
     return last_id;
+}
+
+size_t mndataset_insert_v0(mndataset *dataset, record_super *record) {
+    size_t last_id=mndataset_insert(dataset,&record->var_list);
+    size_t  ind= tbl_super_autoinc_index(dataset->tblsuper);
+    record->var_list_set_field_at(record, VAR_BI(last_id),(char)ind);
+    mnarray_add(dataset->recordset,record);
+    return 0;
 }

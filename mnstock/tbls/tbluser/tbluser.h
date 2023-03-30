@@ -5,7 +5,7 @@
 #pragma once
 #include "mnsql.h"
 #include "mnmetadata.h"
-const char tbluser_field_count =5;//change
+#define tbluser_field_count 5//change
 typedef enum{Id,Title,Usr,Pass,Id_group} tbluser_fields_index;
 typedef struct {
     tbl_super super;//work like inheritance

@@ -15,6 +15,7 @@ typedef struct
 
 mnarray* mnarray_new();//tested
 mnarray* mnarray_init_v0(mnarray* array,size_t size);//tested
+mnarray* mnarray_init_fill_with_0(mnarray* array,size_t size);
 mnarray* mnarray_init(mnarray* array);//not tested
 void mnarray_free(mnarray** array);//tested
 void mnarray_free_v0(mnarray* arr);//tested
@@ -37,7 +38,7 @@ size_t mnarray_search_first(mnarray* arr,void* val_to_search,mnf_char_var_var is
 size_t mnarray_search_next(mnarray* arr,void* val_to_search,mnf_char_var_var is_equal);//tested
 char mnarray_is_equal(mnarray *arr1,mnarray *arr2,mnf_char_var_var is_equal);//tested
 mnarray* mnarray_add_array(mnarray* main_arr,mnarray* to_be_added_arr);
-
+size_t mnarray_get_index_of_item(mnarray* arr,void* item);
 
 
 #ifdef __cplusplus

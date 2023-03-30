@@ -60,11 +60,14 @@ mnmetadata* mnmetadata_list_add(mnmetadata_list *arr, mnmetadata *fld_meta) {
 }
 
 mnmetadata* mnmetadata_list_set_item_at(mnmetadata_list *arr, mnmetadata *fld_meta,size_t ind) {
+    if (!arr->array[ind]) arr->count++;
     arr->array[ind]=fld_meta;
     return fld_meta;
 }
+
 mnmetadata* mnmetadata_list_set_item_at_clean_ex(mnmetadata_list *arr, mnmetadata *fld_meta,size_t ind) {
     if(mnmetadata_list_item_at(arr,ind)) mnmetadata_clean_free((mnmetadata **) &arr->array[ind]);
+    else arr->count++;
     arr->array[ind]=fld_meta;
     return fld_meta;
 }
@@ -128,10 +131,11 @@ mnmetadata_list *mnmetadata_list_clean(mnmetadata_list *arr) {
     return mnarray_clean(arr, (mnfree_fnc) mnmetadata_clean_free);
 }
 
-char tbl_super_autoinc_index(tbl_super *super) {
+size_t tbl_super_autoinc_index(tbl_super *super) {
     for (size_t i = 0; i <super->meta_list->count ; ++i) {
         mnmetadata* meta = mnmetadata_list_item_at(super->meta_list,i);
-        if (meta->is_autoinc) return (char)i;
+        if (meta->is_autoinc) return i;
     }
     return -1;
 }
+

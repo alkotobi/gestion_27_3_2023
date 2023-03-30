@@ -19,12 +19,12 @@ char mndataset_t() {
     mndataset_init(dataset, (tbl_super *) user_meta, db, sqlm);
     mndataset_create_table(dataset);
     test(1,"testing mndataset_create_table...\n");
-    tbluser_record * rec=tbluser_record_init(0, VAR_BI(-1), VAR_S("nour"),
+    tbluser_record * rec=tbluser_record_init(0, 0, VAR_S("nour"),
                                              VAR_S("noor"), VAR_S("123"), VAR_BI(-1));
-    size_t ind=mndataset_insert(dataset,&rec->super.var_list);
-    rec->id= VAR_BI(ind);
-    tbluser_record_refresh_list(rec);
-    mnrecordset_add(dataset->recordset, (mnrecord *) rec);
+    size_t ind=mndataset_insert_v0(dataset,&rec->super);
+    //rec->id= VAR_BI(ind);
+    //tbluser_record_refresh_list(rec);
+    //mnrecordset_add(dataset->recordset, (mnrecord *) rec);
 
     return 1;
 }

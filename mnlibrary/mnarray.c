@@ -231,3 +231,20 @@ mnarray *mnarray_add_array(mnarray *main_arr, mnarray *to_be_added_arr) {
     return main_arr;
 }
 
+size_t mnarray_get_index_of_item(mnarray *arr, void *item) {
+    for (size_t i = 0; i <arr->count ; ++i) {
+        if (mnarray_item_at(arr,i)==item){
+            return i;
+        }
+    }
+    return -1;
+}
+
+mnarray *mnarray_init_fill_with_0(mnarray *array, size_t size) {
+    mnarray_init_v0(array,size);
+    for (size_t i = 0; i <array->size ; ++i) {
+        array->array[i]=0;
+    }
+    return NULL;
+}
+
