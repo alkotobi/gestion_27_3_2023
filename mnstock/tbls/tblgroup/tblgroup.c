@@ -81,7 +81,6 @@ tblgroup_record * tblgroup_record_new(){
     record->grp_name=0;
     record->can_login=0;
     record->can_edit_group=0;
-    record->super.refresh_list=tblgroup_record_refresh_list;return record;
 }
 tblgroup_record * tblgroup_record_clean(tblgroup_record * record){
     mnarray_clean(&record->super.var_list,(mnfree_fnc) mnvariant_clean_free);

@@ -51,6 +51,7 @@ mnvariant *mnvariant_init(mnvariant *var, mntypes data_type, mnvar val,
     var->data_type = data_type;
     var->val = val;
     var->free_me = free_me;
+    var->is_dirty =1;
     return var;
 }
 

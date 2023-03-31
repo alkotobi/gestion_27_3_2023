@@ -8,7 +8,7 @@ extern "C"
 {
 #endif
     //todo: reset ARRAY_MIN_SIZE
-#define ARRAY_MIN_SIZE 1
+#define ARRAY_MIN_SIZE 250
 #define INT_PRINT_SIZE 5
 #define DOUBLE_PRINT_SIZE 10
 #define STRING_PRINT_SIZE 20

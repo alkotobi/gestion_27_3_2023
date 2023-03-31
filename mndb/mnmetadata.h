@@ -55,20 +55,12 @@ mnmetadata* mnmetadata_list_item_at(mnmetadata_list* arr, size_t index);
 void mnmetadata_list_clean_free(void** arr_hld);
 mnmetadata_list* mnmetadata_list_clean(mnmetadata_list* arr);
 mnmetadata_list* mnmetadata_list_clone(mnmetadata_list* list);
-mncstringList *mnmetadata_list_fld_names_list_cpy(mnmetadata_list *list, char generated_only);//tested
+mncstringList *mnmetadata_list_fld_names_list(mnmetadata_list *list, char generated_only, char is_by_clone_names);//tested
 mncstringList *mnmetadata_list_fld_names_list_generated(mnmetadata_list *list);//tested
 //*********************
 
-typedef struct {
-    mnmetadata_list* meta_list;
-    char* table_name;
-}tbl_super;
-int64_t tbl_super_autoinc_index(tbl_super* super);
-typedef struct {
-    mnvariantList var_list;
-    void(*refresh_list)(void*);
-    mnvariant* (*var_list_set_field_at_clean_ex)(void*, mnvariant*, char);
-}record_super;
+
+
 
 #ifdef __cplusplus
 }

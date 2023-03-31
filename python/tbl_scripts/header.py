@@ -16,12 +16,14 @@ class Header:
     @staticmethod
     def includes():
         str0 = "#include \"mnsql.h\"\n" + \
-               "#include \"mnmetadata.h\"\n"
+               "#include \"mnmetadata.h\"\n" \
+               "#include \"mnrecord_super.h\"\n" \
+               "#include \"mnmeta_super.h\"\n"
         return str0
 
     def struct_meta(self):
         str1 = "typedef struct {\n" + \
-               "    tbl_super super;\n" + \
+               "    mnmeta_super super;\n" + \
                '\n'.join(["    mnmetadata* {};".format(d['name']) for d in self.inputs.fields]) + \
                "\n}}{};\n".format(self.inputs.get_struct_meta_name())
         return str1
@@ -38,15 +40,10 @@ class Header:
             self.inputs.get_struct_meta_ptr_hld(), meta_param_name)
         return str1
 
-    # def struct_record_super():
-    #     str0=f"typedef struct {{\n" \
-    #          f"mnvariantList var_list;\n" \
-    #          f"void(*refresh_list)(void*);\n" \
-    #          f"}}record_super;\n"
-    #     return str0
+
     def struct_record(self):
         str0 = "typedef struct {\n    //mnvariantList var_list;\n" \
-               "record_super super;\n" + \
+               "mnrecord_super super;\n" + \
                '\n'.join(["    mnvariant* {};".format(d['name']) for d in self.inputs.fields]) + \
                "\n}}{};\n".format(self.inputs.get_struct_record_name())
         return str0
@@ -70,7 +67,7 @@ class Header:
     def setters(self):
         str0 = "".join([f"{void_name} {self.inputs.get_struct_record_name()}_set_{d[lbl_name]}"
                         f"({self.inputs.get_struct_record_ptr()} {record_param_name},"
-                        f"mnvariant* {d[lbl_name]});\n" for d in self.inputs.fields])
+                        f"mnvariant* {d[lbl_name]},char will_make_dirty);\n" for d in self.inputs.fields])
         return str0
 
     def header_file(self):

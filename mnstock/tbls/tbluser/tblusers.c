@@ -98,30 +98,35 @@ void  tblusers_record_free(tblusers_record ** record_hld){
 mnfree(*record_hld);
 *record_hld=0;
 }
-void  tblusers_record_set_id(tblusers_record * record,mnvariant* id){
+void  tblusers_record_set_id(tblusers_record * record,mnvariant* id,char will_make_dirty){
 mnvariant_clean_free(&record->id);
 record->id=id;
 tblusers_record_list_set_field_at(record,id,Id);
+if (will_make_dirty) id->is_dirty = 1;
 }
-void  tblusers_record_set_title(tblusers_record * record,mnvariant* title){
+void  tblusers_record_set_title(tblusers_record * record,mnvariant* title,char will_make_dirty){
 mnvariant_clean_free(&record->title);
 record->title=title;
 tblusers_record_list_set_field_at(record,title,Title);
+if (will_make_dirty) title->is_dirty = 1;
 }
-void  tblusers_record_set_login(tblusers_record * record,mnvariant* login){
+void  tblusers_record_set_login(tblusers_record * record,mnvariant* login,char will_make_dirty){
 mnvariant_clean_free(&record->login);
 record->login=login;
 tblusers_record_list_set_field_at(record,login,Login);
+if (will_make_dirty) login->is_dirty = 1;
 }
-void  tblusers_record_set_pass(tblusers_record * record,mnvariant* pass){
+void  tblusers_record_set_pass(tblusers_record * record,mnvariant* pass,char will_make_dirty){
 mnvariant_clean_free(&record->pass);
 record->pass=pass;
 tblusers_record_list_set_field_at(record,pass,Pass);
+if (will_make_dirty) pass->is_dirty = 1;
 }
-void  tblusers_record_set_id_group(tblusers_record * record,mnvariant* id_group){
+void  tblusers_record_set_id_group(tblusers_record * record,mnvariant* id_group,char will_make_dirty){
 mnvariant_clean_free(&record->id_group);
 record->id_group=id_group;
 tblusers_record_list_set_field_at(record,id_group,Id_group);
+if (will_make_dirty) id_group->is_dirty = 1;
 }
 mnvariant * tblusers_record_list_set_field_at_clean_ex(void  *record_,mnvariant *field,char ind){
 tblusers_record * record = record_;

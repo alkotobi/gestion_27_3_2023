@@ -12,11 +12,11 @@ char mndataset_t() {
     test(1,"create mnsqlite_param...\n");
     mndatabase* db = mndatabase_init(0, SQLITE, db_param);
     test(1,"create mndatabase...\n");
-    mncstringList* fld_names_list= mnmetadata_list_fld_names_list_cpy(user_meta->super.meta_list, 0);
+    mncstringList* fld_names_list= mnmetadata_list_fld_names_list(user_meta->super.meta_list, 0, 0);
     char*fld_names=mnsql_sql_fields(fld_names_list);
     mnsql* sqlm = mnsql_init_v0(0,db->driver,user_meta->super.table_name,user_meta->super.meta_list,0);
     test(1,"create mnsql...\n");
-    mndataset_init(dataset, (tbl_super *) user_meta, db, sqlm);
+    mndataset_init(dataset, (mnmeta_super *) user_meta, db, sqlm);
     mndataset_create_table(dataset);
     test(1,"testing mndataset_create_table...\n");
     tblusers_record * rec=tblusers_record_init(0, VAR_I(1), VAR_S("nour"),
@@ -28,9 +28,9 @@ char mndataset_t() {
 //                            VAR_I(i));
 //        mndataset_insert_v0(dataset,&r->super);
 //    }
-    tblusers_record_set_id(rec,VAR_I(6));
+    tblusers_record_set_id(rec,VAR_I(6),0);
     //rec->id= VAR_I(6);
-    tblusers_record_set_title(rec,VAR_S(str_cpy("tototo")));
+    tblusers_record_set_title(rec, VAR_S(str_cpy("mohamed")), 1);
 //    rec->title= str_cpy("tototo");
     mndataset_update(dataset,rec);
     //mndataset_get_data(dataset);

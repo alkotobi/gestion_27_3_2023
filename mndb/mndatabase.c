@@ -112,7 +112,7 @@ long long int mndatabase_last_insert_id(mndatabase *db) {
 //TODO: mndatabase_insert_record
 char mndatabase_insert_record(mndatabase *db, mnrecord *record, char *table_name, mnmetadata_list* meta) {
     //todo: inset an already in database record;
-    mncstringList* flds = mnmetadata_list_fld_names_list_cpy(meta, 0);
+    mncstringList* flds = mnmetadata_list_fld_names_list(meta, 0, 0);
     char *sql = mnsql_sql_insert_with_params(flds,table_name);
     char ret = mndatabase_bind_params_and_exec(db, record, sql);
     cstring_free_v0(sql);
@@ -146,7 +146,7 @@ char mndatabase_update_record(mndatabase *db, mnrecord *record, char *table_name
     if (!fld_meta) assert(0);
     char *where_sql = cstring_concat_multi("WHERE %s = %d ",
                                            mnvariant_int(mnvariantList_item_at(record, i)));
-    mncstringList* flds = mnmetadata_list_fld_names_list_cpy(meta, 0);
+    mncstringList* flds = mnmetadata_list_fld_names_list(meta, 0, 0);
     char *sql = (mnsql_sql_update_with_params(flds, table_name, where_sql));
     mncstringList_clean_free(&flds);
     char ret = mndatabase_bind_params_and_exec(db, record, sql);

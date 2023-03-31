@@ -103,18 +103,27 @@ mnmetadata_list *mnmetadata_list_clone(mnmetadata_list *list) {
     return l;
 }
 
-mncstringList *mnmetadata_list_fld_names_list_cpy(mnmetadata_list *list, char generated_only) {
+mncstringList *mnmetadata_list_fld_names_list(mnmetadata_list *list, char generated_only, char is_by_clone_names) {
     mncstringList *names = mncstringList_init(0);
     size_t count = mnarray_count(list);
     for (size_t i = 0; i < count; i++) {
         mnmetadata *meta = mnmetadata_list_item_at(list, i);
         if (generated_only) {
-            if (meta->is_generated) mncstringList_add(names, cstring_new_clone(meta->name));
-        } else mncstringList_add(names, cstring_new_clone(meta->name));
-
+            if (meta->is_generated) {
+                if (is_by_clone_names)
+                mncstringList_add(names, str_cpy(meta->name));
+                else mncstringList_add(names, meta->name);
+            }
+        } else {
+            if (is_by_clone_names)
+            mncstringList_add(names, str_cpy(meta->name));
+            else mncstringList_add(names, meta->name);
+        }
+        }
+        return names;
     }
-    return names;
-}
+
+
 
 mncstringList *mnmetadata_list_fld_names_list_generated(mnmetadata_list *list) {
     mncstringList * names = mncstringList_init(0);
@@ -132,11 +141,5 @@ mnmetadata_list *mnmetadata_list_clean(mnmetadata_list *arr) {
 }
 
 //todo: check all return -1
-int64_t tbl_super_autoinc_index(tbl_super *super) {
-    for (size_t i = 0; i <super->meta_list->count ; ++i) {
-        mnmetadata* meta = mnmetadata_list_item_at(super->meta_list,i);
-        if (meta->is_autoinc) return i;
-    }
-    return -1;
-}
+
 

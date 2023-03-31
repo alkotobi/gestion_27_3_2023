@@ -5,6 +5,7 @@
 #include "mn_db_const.h"
 #include "mnmetadata.h"
 #include "mnfilter.h"
+#include "mnmeta_super.h"
 
 
 
@@ -48,7 +49,7 @@ void mnsql_clear_filters(mnsql* msql);
 char* mnsql_sql(mnsql* sql);
 char* mnsql_create_table(mnarray* var_list,mncstringList* field_names,char* table_name);
 char* mnsql_create_table_v0(char* table_name,mnmetadata_list* fields);
-char* mnsql_create_table_v1(tbl_super* tbl);
+char* mnsql_create_table_v1(mnmeta_super* tbl);
 char* mnsql_sql_fields(mncstringList* field_names);
 char *mnsql_sql_binding_params(mncstringList* names);
 char* mnsql_sql_insert_with_params(mncstringList* names,char* table_name);

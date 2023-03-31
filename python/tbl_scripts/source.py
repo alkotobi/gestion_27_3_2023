@@ -122,11 +122,12 @@ class Source:
     def setters_def(self):
         str0 = "".join([f"{void_name} {self.input.get_struct_record_name()}_set_{d[lbl_name]}"
                         f"({self.input.get_struct_record_ptr()} {record_param_name},"
-                        f"mnvariant* {d[lbl_name]}){{\n"
+                        f"mnvariant* {d[lbl_name]},char will_make_dirty){{\n"
                         f"mnvariant_clean_free(&{record_param_name}->{d[lbl_name]});\n"
                         f"{record_param_name}->{d[lbl_name]}={d[lbl_name]};\n"
                         f"{self.input.get_struct_record_name()}_list_set_field_at({record_param_name},{d[lbl_name]},"
                         f"{d[lbl_name].capitalize()});\n"
+                        f"if (will_make_dirty) {d[lbl_name]}->is_dirty = 1;\n"
                         f"}}\n" for d in self.input.fields])
         #tblusers_record_list_set_field_at(record,title,Title);
         return str0

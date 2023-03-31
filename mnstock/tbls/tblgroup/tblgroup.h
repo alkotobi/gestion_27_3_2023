@@ -4,10 +4,11 @@
 #pragma once
 #include "mnsql.h"
 #include "mnmetadata.h"
+#include "mnrecord_super.h"
 char tblgroup_fields_count=4;
 typedef enum{Id,Grp_name,Can_login,Can_edit_group} tblgroup_fields_index;
 typedef struct {
-    tbl_super super;
+    mnmeta_super super;
     mnmetadata* id;
     mnmetadata* grp_name;
     mnmetadata* can_login;
@@ -23,11 +24,11 @@ void tblgroup_meta_clean_free(tblgroup_meta ** grp_hld);
 //typedef struct {
 //    mnvariantList var_list;
 //    void(*refresh_list)(void*);
-//}record_super;
+//}mnrecord_super;
 
 typedef struct {
     //mnvariantList var_list;
-    record_super super;
+    mnrecord_super super;
     mnvariant* id;
     mnvariant* grp_name;
     mnvariant* can_login;

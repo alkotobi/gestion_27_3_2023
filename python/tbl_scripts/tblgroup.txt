@@ -5,7 +5,7 @@
 #include "mnsql.h"
 #include "mnmetadata.h"
 typedef struct {
-    tbl_super super;
+    mnmeta_super super;
     mnmetadata* id;
     mnmetadata* grp_name;
     mnmetadata* can_login;

@@ -21,6 +21,7 @@ mnarray* mnarray_clean(mnarray *arr, mnfree_fnc f)
         f(&(arr->array[i]));
         arr->array[i]=0;
     }
+    mnfree(arr->array);
     arr->count=0;
     return arr;
 }
@@ -46,7 +47,6 @@ mnarray* mnarray_init(mnarray* array)
 
 void mnarray_free(mnarray** array)
 {
-    mnfree((*array)->array);
     mnarray_free_v0(*array);
     *array =0;
 }

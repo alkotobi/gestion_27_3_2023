@@ -399,7 +399,7 @@ char *mnsql_sql_delete(char *table_name, char *where_close) {
     return cstring_new_from_concat(4, "DELETE * FROM ", table_name, " ", where_close);
 }
 
-char *mnsql_create_table_v1(tbl_super* tbl) {
+char *mnsql_create_table_v1(mnmeta_super* tbl) {
     return mnsql_create_table_v0(tbl->table_name,tbl->meta_list);
 }
 
@@ -430,9 +430,8 @@ mnsql *
 mnsql_init_v0(mnsql *sql, db_drivers driver, char *table_name, mnmetadata_list *meta_list, char only_generated) {
     return mnsql_init(sql,driver,table_name,
                       mnsql_sql_fields(
-                              mnmetadata_list_fld_names_list_cpy(
-                                      meta_list, only_generated
-                              )
+                              mnmetadata_list_fld_names_list(
+                                      meta_list, only_generated, 0)
                                       ),
                       0,0,0);
 }

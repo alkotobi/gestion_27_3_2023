@@ -15,6 +15,7 @@ struct mnvariant{
     mntypes data_type;
     mnvar val;
     mnfree_fnc free_me;
+    char is_dirty;
 };
 typedef struct mnvariant mnvariant ;
 

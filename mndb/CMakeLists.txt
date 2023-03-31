@@ -16,7 +16,7 @@ add_library(mndb
         mnfilter.h
         mnfilter.c
         mndataset.c
-        mndataset.h)
+        mndataset.h mnrecord_super.c mnrecord_super.h mnmeta_super.h mnmeta_super.c)
 target_include_directories(mndb PUBLIC ./)
 target_link_libraries(mndb  mnlibrary )
 #target_include_directories(mnlibrary_test PUBLIC ../../mnlibrary)

@@ -32,5 +32,5 @@ char mnsql_test()
 //    print_blue("\n");
 //    mnsql_clean(sql2);
 //    mnsql_free(&sql2);
-//    return 1;
+  return 1;
 }
