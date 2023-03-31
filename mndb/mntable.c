@@ -18,7 +18,7 @@ mntable * mntable_new() {
 mntable * mntable_init(mntable *tbl, char *table_name, mnmetadata_list *meta_list,mndatabase* db) {
     tbl->table_name = table_name;
     tbl->metadata =meta_list;
-    tbl->fld_names_list = mnmetadata_list_fld_names_list(meta_list, 0);
+    tbl->fld_names_list = mnmetadata_list_fld_names_list_cpy(meta_list, 0);
     tbl->db =db;
     tbl->msql= mnsql_init(0, db->driver, str_cpy(table_name),
                           mnsql_sql_fields(tbl->fld_names_list),

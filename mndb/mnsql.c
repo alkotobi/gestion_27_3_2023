@@ -430,9 +430,9 @@ mnsql *
 mnsql_init_v0(mnsql *sql, db_drivers driver, char *table_name, mnmetadata_list *meta_list, char only_generated) {
     return mnsql_init(sql,driver,table_name,
                       mnsql_sql_fields(
-                              mnmetadata_list_fld_names_list(
-                                      meta_list,only_generated
-                                      )
+                              mnmetadata_list_fld_names_list_cpy(
+                                      meta_list, only_generated
+                              )
                                       ),
                       0,0,0);
 }

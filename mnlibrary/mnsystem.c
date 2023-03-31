@@ -17,6 +17,10 @@ void mnfree(void* ptr)
 {
     free(ptr);
 }
+void mnfree_v0(void** ptr_hld){
+    mnfree(*ptr_hld);
+    *ptr_hld=0;
+}
 
 void mnfree_v1(mnptrhld ptr_hld)
 {

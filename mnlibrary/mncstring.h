@@ -39,6 +39,7 @@ char* mnarray_search_first_cstring(mnarray* arr,char* str);//tested
 char* mnarray_search_next_cstring(mnarray* arr,char* str);//tested
 size_t cstring_find_sub(char* str,char* substr);
 char* cstring_concat_multi(const char *str, ...);
+char* str_concat(const char *str, ...);
 
 #ifdef __cplusplus
 }

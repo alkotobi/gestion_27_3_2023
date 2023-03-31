@@ -17,7 +17,8 @@ typedef enum {
     CString,
     Double,
     Int,
-    Big_int
+    Big_int,
+    Null,
 } mntypes ;
 
 //typedef  enum mnlogic_op mnlogic_op_enum  ;
@@ -46,7 +47,7 @@ void mnfree(void* ptr);
 void mnfree_v1(mnptrhld ptr_hld);
 void* mnrealloc(void* ptr,size_t new_size);
 void* mncalloc(size_t count,size_t size);
-
+void mnfree_v0(void** ptr_hld);
 
 #ifdef __cplusplus
 }

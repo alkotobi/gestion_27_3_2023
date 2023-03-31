@@ -88,25 +88,14 @@ class Source:
 
         return str0
 
-    def tbluser_record_refresh_list(self):
-        str0 = f"{void_name} {self.input.get_struct_record_name()}_refresh_list({void_name} *{record_param_name}_){{\n" \
-               f"{self.input.get_struct_record_ptr()} {record_param_name} =" \
-               f" ({self.input.get_struct_record_ptr()}){record_param_name}_;\n" \
-               f"mnvariantList_clean(&{record_param_name}->super.var_list);\n" + \
-               "".join(
-                   [f" mnvariantList_add(&{record_param_name}->super.var_list,{record_param_name}->{d[lbl_name]});\n"
-                    for d in self.input.fields]) + \
-               f"}}\n"
-        return str0
 
     def tbluser_record_new(self):
         str0 = f"{self.input.get_struct_record_ptr()} {self.input.get_struct_record_name()}_new(){{\n" \
                f"{self.input.get_struct_record_ptr()} {record_param_name}=({self.input.get_struct_record_ptr()}) " \
                f"mnalloc(sizeof({self.input.get_struct_record_name()}));\n" \
                f"mnassert({record_param_name});\n" + \
-               f"".join([f"{record_param_name}->{d[lbl_name]}=0;\n" for d in self.input.fields]) + \
-               f"{record_param_name}->super.refresh_list={self.input.get_struct_record_name()}_refresh_list;" \
-               f"{record_param_name}->super.var_list_set_field_at=" \
+               f"".join([f"{record_param_name}->{d[lbl_name]}=0;\n" for d in self.input.fields]) +\
+               f"{record_param_name}->super.var_list_set_field_at_clean_ex=" \
                f"{self.input.get_struct_record_name()}_list_set_field_at_clean_ex;\n" \
                f"return {record_param_name};\n" \
                f"}}\n"
@@ -136,8 +125,10 @@ class Source:
                         f"mnvariant* {d[lbl_name]}){{\n"
                         f"mnvariant_clean_free(&{record_param_name}->{d[lbl_name]});\n"
                         f"{record_param_name}->{d[lbl_name]}={d[lbl_name]};\n"
-                        f"{self.input.get_struct_record_name()}_refresh_list({record_param_name});\n"
+                        f"{self.input.get_struct_record_name()}_list_set_field_at({record_param_name},{d[lbl_name]},"
+                        f"{d[lbl_name].capitalize()});\n"
                         f"}}\n" for d in self.input.fields])
+        #tblusers_record_list_set_field_at(record,title,Title);
         return str0
 
     def tbluser_record_list_set_field_at(self):
@@ -181,8 +172,8 @@ class Source:
         str0 = self.source_intro() + self.source_includes() + \
                self.tbluser_meta_new() + self.tbluser_meta_init() + \
                self.tbluser_meta_free() + self.tbluser_meta_clean_free() + \
-               self.tbluser_meta_clean() + self.tbluser_record_init() + \
-               self.tbluser_record_refresh_list() + self.tbluser_record_new() + \
+               self.tbluser_meta_clean() + self.tbluser_record_init()  +\
+               self.tbluser_record_new() + \
                self.tbluser_record_clean() + self.tbluser_record_free() + \
                self.setters_def() + self.tbluser_record_list_set_field_at_clean_ex() + \
                self.tbluser_record_list_set_field_at()

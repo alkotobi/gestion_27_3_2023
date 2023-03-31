@@ -311,7 +311,17 @@ size_t cstring_find_sub(char *str, char *substr) {
     return -1;
 }
 
-
+char* str_concat(const char *str, ...){
+    va_list args;
+    va_start(args, str);
+    size_t len = vsnprintf(NULL, 0, str, args);
+    char* s =  cstring_new_v0(len);
+    va_end(args);
+    va_start(args, str);
+    vsprintf(s, str, args);
+    va_end(args);
+    return s;
+}
 
 char* cstring_concat_multi(const char *str, ...){
     //TODO: recheck cstring_concat_multi

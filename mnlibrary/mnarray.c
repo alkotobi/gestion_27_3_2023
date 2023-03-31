@@ -224,6 +224,16 @@ char mnarray_is_equal(mnarray *arr1,mnarray *arr2,mnf_char_var_var is_equal)
     
 }
 
+mnarray* mnarray_concat_to_new_array(mnarray* arr1,mnarray* arr2){
+    mnarray* arr = mnarray_init(0);
+    for (size_t i = 0; i < arr1->count ; ++i) {
+        mnarray_add(arr, mnarray_item_at(arr1,i));
+    }
+    for (size_t i = 0; i < arr2->count ; ++i) {
+        mnarray_add(arr, mnarray_item_at(arr2,i));
+    }
+    return arr;
+}
 mnarray *mnarray_add_array(mnarray *main_arr, mnarray *to_be_added_arr) {
     for (size_t i = 0; i < to_be_added_arr->count; ++i) {
         mnarray_add(main_arr, mnarray_item_at(to_be_added_arr,i));
@@ -241,10 +251,10 @@ size_t mnarray_get_index_of_item(mnarray *arr, void *item) {
 }
 
 mnarray *mnarray_init_fill_with_0(mnarray *array, size_t size) {
-    mnarray_init_v0(array,size);
+    array=mnarray_init_v0(array,size);
     for (size_t i = 0; i <array->size ; ++i) {
         array->array[i]=0;
     }
-    return NULL;
+    return array;
 }
 

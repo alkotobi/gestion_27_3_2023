@@ -85,7 +85,7 @@ void mnfilter_clean_free(mnfilter **flt_hld) {
 
 mnfilter *mnfilter_clean(mnfilter *flt) {
     if (flt->filter_prv){
-        mnfilter_clean_free(&flt->filter_prv);
+        mnfilter_clean(flt->filter_prv);
     }
     cstring_free((void **) &flt->fld_name);
     mnvariant_clean_free(&flt->val);
@@ -93,6 +93,9 @@ mnfilter *mnfilter_clean(mnfilter *flt) {
 }
 
 void mnfilter_free(mnfilter **flt_hld){
+    if ((*flt_hld)->filter_prv){
+        mnfilter_free(&((*flt_hld)->filter_prv));
+    }
         mnfree(*flt_hld);
         *flt_hld = 0;
     }

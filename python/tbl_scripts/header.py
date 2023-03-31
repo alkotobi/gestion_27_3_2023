@@ -55,8 +55,6 @@ class Header:
         str0 = self.inputs.get_struct_record_ptr() + self.inputs.get_struct_record_name() + "_init(" + \
                self.inputs.get_struct_record_ptr() + record_param_name + \
                ",{});\n".format(',\n'.join(["    mnvariant* {}".format(d['name']) for d in self.inputs.fields])) + \
-               f"{void_name}  {self.inputs.get_struct_record_name()}_refresh_list" + \
-               "({} *{}_);\n".format(void_name, record_param_name) + \
                self.inputs.get_struct_record_ptr() + self.inputs.get_struct_record_name() + \
                "_clean({} {});\n".format(self.inputs.get_struct_record_ptr(), record_param_name) + \
                void_name + self.inputs.get_struct_record_name() + \

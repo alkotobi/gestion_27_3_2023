@@ -37,6 +37,7 @@ void* mnarray_last(mnarray* arr);//tested
 size_t mnarray_search_first(mnarray* arr,void* val_to_search,mnf_char_var_var is_equal);//tested
 size_t mnarray_search_next(mnarray* arr,void* val_to_search,mnf_char_var_var is_equal);//tested
 char mnarray_is_equal(mnarray *arr1,mnarray *arr2,mnf_char_var_var is_equal);//tested
+mnarray* mnarray_concat_to_new_array(mnarray* arr1,mnarray* arr2);
 mnarray* mnarray_add_array(mnarray* main_arr,mnarray* to_be_added_arr);
 size_t mnarray_get_index_of_item(mnarray* arr,void* item);
 

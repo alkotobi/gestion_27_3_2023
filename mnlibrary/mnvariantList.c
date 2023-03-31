@@ -49,7 +49,8 @@ mnvariant* mnvariantList_item_at(mnvariantList* var_list,size_t ind)
 
 void mnvariantList_printf(mnvariantList *list) {
     for (size_t i = 0; i < list->count; ++i) {
-        mnvariant_printf(mnvariantList_item_at(list,i));
+        mnvariant* var = mnvariantList_item_at(list,i);
+        mnvariant_printf(var);
     }
 
 }

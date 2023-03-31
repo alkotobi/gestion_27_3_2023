@@ -189,12 +189,12 @@ char *mnvariant_to_new_cstring_printable(mnvariant *var) {
             sprintf(s, "%d", mnvariant_int(var));
             cstring_replace_sub_string_at(str, 0, s);
             return str;
-            break;
+
         case CString:
             str = cstring_new_fill_with_char(' ', STRING_PRINT_SIZE);
             cstring_replace_sub_string_at(str, 0, mnvariant_cstring_ret_ref(var));
             return str;
-            break;
+
         case Double:
 
             str = cstring_new_fill_with_char(' ', DOUBLE_PRINT_SIZE);
@@ -202,10 +202,20 @@ char *mnvariant_to_new_cstring_printable(mnvariant *var) {
             sprintf(s1, "%f", mnvariant_double(var));
             cstring_replace_sub_string_at(str, 0, s1);
             return str;
-            break;
+
         default:
             assert(0);
-            break;
+
+
+        case Big_int:
+            str = cstring_new_fill_with_char(' ', DOUBLE_PRINT_SIZE);
+            char s3[200];
+            sprintf(s1, "%lld", mnvariant_big_int(var));
+            cstring_replace_sub_string_at(str, 0, s1);
+            return str;
+
+        case Null:
+            return str_cpy("");
 
     }
 }
@@ -220,19 +230,27 @@ char *mnvariant_to_new_cstring_out_size(mnvariant *var, size_t out_size) {
             sprintf(s, "%d", mnvariant_int(var));
             cstring_replace_sub_string_at(str, 0, s);
             return str;
-            break;
+
         case CString:
             cstring_replace_sub_string_at(str, 0, mnvariant_cstring_ret_ref(var));
             return str;
-            break;
+
         case Double:
             sprintf(s, "%f", mnvariant_double(var));
             cstring_replace_sub_string_at(str, 0, s);
             return str;
-            break;
+
         default:
             assert(0);
-            break;
+
+
+        case Big_int:
+            sprintf(s, "%lld", mnvariant_big_int(var));
+            cstring_replace_sub_string_at(str, 0, s);
+            return str;
+
+        case Null:
+            return str_cpy("");
 
     }
 }
@@ -256,9 +274,12 @@ char *mnvariant_to_new_cstring(mnvariant *var) {
             sprintf(s, "%lld", mnvariant_big_int(var));
             str = cstring_new_clone(s);
             return str;
-            break;
+
         default:
             assert(0);
+        case Null:
+            return str_cpy("");
+
     }
 }
 
@@ -291,16 +312,22 @@ char mnvariant_is_equal(mnvariant *var1, mnvariant *var2) {
     switch (var1->data_type) {
         case CString:
             return cstring_is_equal(var1->val, var2->val);
-            break;
+
         case Int:
             return mnvariant_int(var1) == mnvariant_int(var2);
-            break;
+
         case Double:
             return mnvariant_double(var1) == mnvariant_double(var2);
-            break;
+
         default:
             assert(0);
-            break;
+
+        case Big_int:
+            return mnvariant_big_int(var1)== mnvariant_big_int(var2);
+
+        case Null:
+            assert(0);
+
     }
 }
 
@@ -319,7 +346,7 @@ mnvariant *mnvariant_clone_v0(mnvariant *var) {
         default:
             assert(0);
     }
-    return NULL;
+
 }
 
 char *mnvariant_cstring_ret_cpy(mnvariant *var) {
@@ -343,5 +370,16 @@ void mnvariant_printf(mnvariant *var) {
         default:
             assert(0);
     }
+}
+
+
+mnvariant *mnvariant_init_null() {
+    mnvariant * v= mnvariant_init(0,Null,0,mnfree_v0);
+    return v;
+}
+
+char mnvariant_is_null(mnvariant *var) {
+    if (var->data_type==Null) return 1;
+    return 0;
 }
 

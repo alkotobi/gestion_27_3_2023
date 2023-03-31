@@ -56,6 +56,9 @@ size_t mnarray_search_next_mnvariant(mnarray *arr,mnvariant *var_to_search);
 char mnvariant_is_equal(mnvariant *var1,mnvariant *var2);
 mnvariant *mnvariant_clone_v0(mnvariant* var);
 void mnvariant_printf(mnvariant* var);
+#define VAR_NULL mnvariant_init_null()
+mnvariant* mnvariant_init_null();
+char mnvariant_is_null(mnvariant* var);
 #ifdef __cplusplus
 }
 #endif

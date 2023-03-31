@@ -115,6 +115,11 @@ mnrecordset*  mnsqlite_getdata_v0(sqlite3_stmt* stmt ){
                 mnvariantList_add(record,field);
                 //mncstringList_add_clone(tbl->names,sqlite3_column_name(stmt,i));
             }
+            else if(sqlite3_column_type(stmt,i)==SQLITE_NULL){
+                mnvariant* field=mnvariant_init_null();
+                mnvariantList_add(record,field);
+                //mncstringList_add_clone(tbl->names,sqlite3_column_name(stmt,i));
+            }
         }
         mnrecordset_add(recordset,record);
     }
@@ -149,6 +154,11 @@ mnrecordset*  mnsqlite_getdata_v0(sqlite3_stmt* stmt ){
                         mnvariantList_add(record,field);
                         //mncstringList_add_clone(tbl->names,sqlite3_column_name(stmt,i));
                     }
+                    else if(sqlite3_column_type(stmt,i)==SQLITE_NULL){
+                        mnvariant* field=mnvariant_init_null();
+                        mnvariantList_add(record,field);
+                        //mncstringList_add_clone(tbl->names,sqlite3_column_name(stmt,i));
+                    }
                 }
                 mnrecordset_add(recordset,record);
             }
@@ -180,6 +190,9 @@ void mnsqlite_bind_params(sqlite3_stmt* rds,mnvariantList *params){
             default:
                 assert(0);
 
+            case Null:
+                sqlite3_bind_null(rds,j);
+                break;
         }
         j++;
     }
