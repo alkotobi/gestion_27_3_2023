@@ -32,10 +32,13 @@ char mndataset_create_table(mndataset* dataset);//tested
 mndataset *mndataset_get_data(mndataset *dataset);//tested
 size_t mndataset_insert(mndataset* dataset,mnvariantList * vals);//tested
 size_t mndataset_insert_v0(mndataset* dataset, mnrecord_super * record);//tested
-char mndataset_update(mndataset* dataset, mnrecord_super* record);
+char mndataset_update(mndataset* dataset, mnrecord_super* record);//tested
 char mndataset_update_records(mndataset* dataset, mnrecordset * records);
+char mndataset_update_with_filter(mndataset* dataset,
+                                  mnvariantList* vals_list,
+                                  mncstringList* names_list,struct mnfilter* filter);
+char mndataset_delete_with_filter(mndataset* dataset,mnfilter* filter);//tested
 mnvariant *mndataset_get_primary_key_value(mndataset *dataset, mnrecord_super *record, char is_by_clone_val);
-
 
 
 

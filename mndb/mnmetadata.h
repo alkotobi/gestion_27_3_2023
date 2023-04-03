@@ -23,6 +23,7 @@ typedef struct
     int is_primary_key;
     int is_autoinc;
     int is_generated;
+    char* caption;
 }mnmetadata;
 
 
@@ -57,6 +58,7 @@ mnmetadata_list* mnmetadata_list_clean(mnmetadata_list* arr);
 mnmetadata_list* mnmetadata_list_clone(mnmetadata_list* list);
 mncstringList *mnmetadata_list_fld_names_list(mnmetadata_list *list, char generated_only, char is_by_clone_names);//tested
 mncstringList *mnmetadata_list_fld_names_list_generated(mnmetadata_list *list);//tested
+char mnmetadata_list_generated_count(mnmetadata_list* list);
 //*********************
 
 

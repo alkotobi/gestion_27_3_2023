@@ -28,3 +28,4 @@ mnmeta_super_get_fields_names_list_by_indexes(mnmeta_super *meta_super,
                                               char is_by_clone_names);
 int64_t mnmeta_super_get_autoinc_field_ind(mnmeta_super * meta_super);
 int64_t mnmeta_super_get_primary_key_field_ind(mnmeta_super* meta_super);
+mnvariant *mnmeta_super_get_primary_key_value_v0(mnmeta_super *meta_super, mnvariantList *var_list, char is_by_clone_val);

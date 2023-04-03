@@ -61,6 +61,7 @@ mnsql_params *mnsql_params_clean(mnsql_params *params) {
 
 mndataset *mndataset_get_data(mndataset *dataset) {
     mnassert(dataset);
+    mnassert(dataset);
     mnassert(dataset->sql);
     mnassert(dataset->db);
     char *sql = mnsql_select(dataset->sql);
@@ -71,10 +72,12 @@ mndataset *mndataset_get_data(mndataset *dataset) {
     } else {
         dataset->recordset = mndatabase_get_data(dataset->db, sql);
     }
-    return NULL;
+    return dataset;
 }
 
 size_t mndataset_insert(mndataset *dataset, mnvariantList *vals) {
+    mnassert(dataset);
+    mnassert(vals);
     mnmetadata_list *metalist = dataset->meta_super->meta_list;
     mncstringList *names_list = mncstringList_init(0);
     mnvariantList *vals_list = mnvariantList_init(0);
@@ -94,6 +97,8 @@ size_t mndataset_insert(mndataset *dataset, mnvariantList *vals) {
 }
 
 size_t mndataset_insert_v0(mndataset *dataset, mnrecord_super *record) {
+    mnassert(dataset);
+    mnassert(record);
     size_t last_id = mndataset_insert(dataset, &(record->var_list));
     int64_t ind = mnmeta_super_autoinc_index(dataset->meta_super);
     if (ind >= 0) {
@@ -105,16 +110,14 @@ size_t mndataset_insert_v0(mndataset *dataset, mnrecord_super *record) {
 
 
 mnvariant *mndataset_get_primary_key_value(mndataset *dataset, mnrecord_super *record, char is_by_clone_val) {
-    size_t ind = mnmeta_super_get_primary_key_field_ind(dataset->meta_super);
-    if (ind == -1) mnassert(0);
-    if (is_by_clone_val)
-        return mnvariant_clone_v0(mnarray_item_at(&record->var_list, ind));
-    else return mnarray_item_at(&record->var_list, ind);
-
+    return mnmeta_super_get_primary_key_value_v0(dataset->meta_super,&record->var_list,is_by_clone_val);
 }
 
 
+
 char mndataset_update(mndataset *dataset, mnrecord_super *record) {
+    mnassert(dataset);
+    mnassert(record);
     mnvariantList* list_dirty_indexes= mnrecord_super_new_list_dirty_indexes(record);
     mnvariantList* list_dirty_values = mnrecord_super_new_list_dirty_values(record, 0);
     mncstringList* list_dirty_names= mnmeta_super_get_fields_names_list_by_indexes(dataset->meta_super,0,list_dirty_indexes,0);
@@ -129,8 +132,8 @@ char mndataset_update(mndataset *dataset, mnrecord_super *record) {
     //mncstringList *list = mnmetadata_list_fld_names_list(dataset->meta_super->meta_list, 0, 0);
     char *sql = mnsql_sql_update_with_params(list_dirty_names, dataset->meta_super->table_name, str);
     mnvariantList *filter_vals = mnfilter_vals(filter);
-    //mnvariantList *vals = mnarray_concat_to_new_array(&record->var_list, filter_vals);
-    char ret = mndatabase_bind_params_and_exec(dataset->db, list_dirty_values, sql);
+    mnvariantList *vals = mnarray_concat_to_new_array(list_dirty_values, filter_vals);
+    char ret = mndatabase_bind_params_and_exec(dataset->db, vals, sql);
     mnrecord_super_set_dirty_items_in_indexes(record,list_dirty_indexes,0);
     cstring_free((void **) &sql);
     mnvariantList_free(&filter_vals);
@@ -138,7 +141,7 @@ char mndataset_update(mndataset *dataset, mnrecord_super *record) {
     //mncstringList_clean_free(&list);
     cstring_free((void **) &str);
     //cstring_free((void **) &where);
-    //mnvariantList_free(&vals);
+    mnvariantList_free(&vals);
     mnvariantList_clean_free(&list_dirty_indexes);
     mnvariantList_free(&list_dirty_values);
     mncstringList_free(&list_dirty_names);
@@ -146,34 +149,81 @@ char mndataset_update(mndataset *dataset, mnrecord_super *record) {
 }
 
 char mndataset_update_records(mndataset *dataset, mnrecordset *records) {
-//    mnvariantList* list_dirty_indexes= mnrecord_super_new_list_dirty_indexes(record);
-//    mnvariantList* list_dirty_values = mnrecord_super_new_list_dirty_values(record, 0);
-//    mncstringList* list_dirty_names= mnmeta_super_get_fields_names_list_by_indexes(dataset->meta_super,0,list_dirty_indexes,0);
-//    struct mnfilter *
-//            filter = mnfilter_init(0,
-//                                   AND,
-//                                   mnmeta_super_get_primary_key_filed_name(dataset->meta_super, 0),
-//                                   EQ,
-//                                   mndataset_get_primary_key_value(dataset, record, 0));
-//    char *str = mnfilter_create_with_params(filter);
-//    //char *where = cstring_new_concat_2(" where ", str);
-//    //mncstringList *list = mnmetadata_list_fld_names_list(dataset->meta_super->meta_list, 0, 0);
-//    char *sql = mnsql_sql_update_with_params(list_dirty_names, dataset->meta_super->table_name, str);
-//    mnvariantList *filter_vals = mnfilter_vals(filter);
-//    //mnvariantList *vals = mnarray_concat_to_new_array(&record->var_list, filter_vals);
-//    char ret = mndatabase_bind_params_and_exec(dataset->db, list_dirty_values, sql);
-//    mnrecord_super_set_dirty_items_in_indexes(record,list_dirty_indexes,0);
-//    cstring_free((void **) &sql);
-//    mnvariantList_free(&filter_vals);
-//    mnfilter_free(&filter);
-//    //mncstringList_clean_free(&list);
-//    cstring_free((void **) &str);
-//    //cstring_free((void **) &where);
-//    //mnvariantList_free(&vals);
-//    mnvariantList_clean_free(&list_dirty_indexes);
-//    mnvariantList_free(&list_dirty_values);
-//    mncstringList_free(&list_dirty_names);
-//    return ret;
+    mnassert(dataset);
+    mnassert(records);
+    char ret=1;
+    mndatabase_start_transaction(dataset->db);
+    for (size_t i = 0; i < records->count; ++i) {
+        mnvariantList *record0 = mnarray_item_at(records, i);
+
+        mnvariantList *list_dirty_indexes = mnvariantList_new_list_dirty_indexes(record0);
+        mnvariantList *list_dirty_values = mnvariantList_new_list_dirty_values(record0, 0);
+        mncstringList *list_dirty_names = mnmeta_super_get_fields_names_list_by_indexes(dataset->meta_super,
+                                                                                        0,
+                                                                                        list_dirty_indexes,
+                                                                                        0);
+        struct mnfilter *
+                filter = mnfilter_init(0,
+                                       AND,
+                                       mnmeta_super_get_primary_key_filed_name(dataset->meta_super, 0),
+                                       EQ,
+                                       mnmeta_super_get_primary_key_value_v0(dataset->meta_super, record0, 0));
+        char *str = mnfilter_create_with_params(filter);
+        //char *where = cstring_new_concat_2(" where ", str);
+        //mncstringList *list = mnmetadata_list_fld_names_list(dataset->meta_super->meta_list, 0, 0);
+        char *sql = mnsql_sql_update_with_params(list_dirty_names, dataset->meta_super->table_name, str);
+        mnvariantList *filter_vals = mnfilter_vals(filter);
+        mnvariantList *vals = mnarray_concat_to_new_array(list_dirty_values, filter_vals);
+        ret =ret* mndatabase_bind_params_and_exec(dataset->db, vals, sql);
+        mnvariantList_set_dirty_items_in_indexes(record0, list_dirty_indexes, 0);
+        cstring_free((void **) &sql);
+        mnvariantList_free(&filter_vals);
+        mnfilter_free(&filter);
+        //mncstringList_clean_free(&list);
+        cstring_free((void **) &str);
+        //cstring_free((void **) &where);
+        mnvariantList_free(&vals);
+        mnvariantList_clean_free(&list_dirty_indexes);
+        mnvariantList_free(&list_dirty_values);
+        mncstringList_free(&list_dirty_names);
+
+    }
+    if (ret) mndatabase_commit(dataset->db);
+    else mndatabase_rollback(dataset->db);
+    return ret;
+}
+
+char mndataset_update_with_filter(mndataset *dataset, mnvariantList *vals_list, mncstringList *names_list,
+                                  struct mnfilter *filter) {
+    mnassert(filter);
+    mnassert(dataset);
+    mnassert(vals_list);
+    mnassert(names_list);
+    char* filter_str=mnfilter_create_with_params(filter);
+    char * sql = mnsql_sql_update_with_params(names_list,dataset->meta_super->table_name,filter_str);
+    mnvariantList* filter_vals = mnfilter_vals(filter);
+    mnvariantList * vals = mnarray_concat_to_new_array(vals_list,filter_vals );
+    char ret=mndatabase_bind_params_and_exec(dataset->db,vals,sql);
+    cstring_free((void **) &filter_str);
+    cstring_free((void **)&sql);
+    mnvariantList_free(&filter_vals);
+    return ret;
+}
+
+char mndataset_delete_with_filter(mndataset *dataset, mnfilter *filter) {
+    mnassert(filter);
+    mnassert(dataset);
+    char* filter_sql = mnfilter_create_with_params(filter);
+    mnvariantList* filter_vals = mnfilter_vals(filter);
+    char* sql=mnsql_sql_delete(dataset->meta_super->table_name,filter_sql);
+    mndatabase_start_transaction(dataset->db);
+    char ret=mndatabase_bind_params_and_exec(dataset->db,filter_vals,sql);
+    if (ret) mndatabase_commit(dataset->db);
+    else mndatabase_rollback(dataset->db);
+    cstring_free((void **) &filter_sql);
+    mnvariantList_free(&filter_vals);
+    cstring_free((void **) &sql);
+    return ret;
 }
 
 

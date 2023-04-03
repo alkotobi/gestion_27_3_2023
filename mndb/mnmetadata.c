@@ -13,6 +13,7 @@ mnmetadata *mnmetadata_new() {
     cst->is_autoinc = 0;
     cst->type=-1;
     cst->is_generated =1;
+    cst->caption=0;
     return cst;
 }
 
@@ -124,7 +125,17 @@ mncstringList *mnmetadata_list_fld_names_list(mnmetadata_list *list, char genera
     }
 
 
-
+char mnmetadata_list_generated_count(mnmetadata_list* list){
+    mncstringList * names = mncstringList_init(0);
+    size_t count = mnarray_count(list);
+    char gen_count=0;
+    for (size_t i = 0; i < count ; i++) {
+        mnmetadata* meta = mnmetadata_list_item_at(list, i);
+        if (meta->is_generated)
+            gen_count++;
+    }
+    return gen_count;
+}
 mncstringList *mnmetadata_list_fld_names_list_generated(mnmetadata_list *list) {
     mncstringList * names = mncstringList_init(0);
     size_t count = mnarray_count(list);

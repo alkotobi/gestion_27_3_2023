@@ -16,6 +16,11 @@
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget{
+ -fx-background-color: linear-gradient(to bottom right,#0f6789,#286155);
+}</string>
+  </property>
   <property name="locale">
    <locale language="Arabic" country="Algeria"/>
   </property>

@@ -206,7 +206,7 @@ char mnsqlie_bind_params_and_exec(sqlite3 *db, mnvariantList *params, char *sql)
     if (res != MN_OK) {
         fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(sqlitedb));
         sqlite3_finalize(rds);
-        mnassert(0);
+        //mnassert(0);
         return 0;
     }
     mnsqlite_bind_params(rds,params);
@@ -215,10 +215,13 @@ char mnsqlie_bind_params_and_exec(sqlite3 *db, mnvariantList *params, char *sql)
         sqlite3_finalize(rds);
         //sqlite3_last_insert_rowid(sqlitedb);
         return 1;
+    } else{
+        fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(sqlitedb));
+        sqlite3_finalize(rds);
+        //mnassert(0);
+        return 0;
     }
-    sqlite3_finalize(rds);
-    mnassert(0);
-    return 0;
+
 }
 
 mnrecordset *mnsqlie_bind_params_and_get_data(sqlite3 *db, mnvariantList *params, char *sql) {

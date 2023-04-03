@@ -111,3 +111,12 @@ mncstringList *mnmeta_super_get_fields_names_list_by_indexes(mnmeta_super *meta_
     }
     return list;
 }
+
+mnvariant *mnmeta_super_get_primary_key_value_v0(mnmeta_super *meta_super, mnvariantList *var_list, char is_by_clone_val) {
+    size_t ind = mnmeta_super_get_primary_key_field_ind(meta_super);
+    if (ind == -1) mnassert(0);
+    if (is_by_clone_val)
+        return mnvariant_clone_v0(mnarray_item_at(var_list, ind));
+    else return mnarray_item_at(var_list, ind);
+
+}

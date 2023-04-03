@@ -7,7 +7,7 @@
 #include "cqlineEdit.h"
 #include "cqlayout.h"
 #include "cqtableview.h"
-#include "cqsqlmodal.h"
+#include "mnsql_modal.h"
 
 
 QPushButton* QPushButton_test(QWidget* parent);

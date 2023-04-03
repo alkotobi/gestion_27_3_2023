@@ -396,7 +396,7 @@ WHERE condition;
 }
 
 char *mnsql_sql_delete(char *table_name, char *where_close) {
-    return cstring_new_from_concat(4, "DELETE * FROM ", table_name, " ", where_close);
+    return cstring_new_from_concat(4, "DELETE  FROM ", table_name, " where ", where_close);
 }
 
 char *mnsql_create_table_v1(mnmeta_super* tbl) {

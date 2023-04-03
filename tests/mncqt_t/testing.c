@@ -23,10 +23,14 @@ QVBoxLayout* QVBoxLayout_test(QWidget* parent)
     QVBoxLayout* lay = QVBoxLayout_new(parent);
     return lay;
 }
-
+int return_count(){
+    return 10;
+}
 QTableView *QTableView_test(QWidget *parent)
 {
     QTableView* v = QTableView_new(parent);
-    QTableView_set_modal(v,CQSqlModal_new(v));
+    QSqlModal* modal = mnsql_modal_new(v);
+    mnsql_modal_fnc_col_count(modal,return_count);
+    QTableView_set_modal(v,modal);
     return v;
 }

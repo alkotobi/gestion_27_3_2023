@@ -9,5 +9,7 @@ void frmlogin_setup_wid(Ui_Window_login* ui,QWidget *parent) {
 
 extern "C"
 Ui_Window_login* frmlogin_new(){
+    Ui_Window_login* a;
+    a->btn_close->click.connect()
     return new (std::nothrow) Ui_Window_login();
 }

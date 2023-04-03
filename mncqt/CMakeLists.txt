@@ -35,17 +35,17 @@ cqlineEdit.h
 cqlineEdit.cpp
 cqtableview.h
 cqtableview.cpp
-cqsqlmodal.h
-cqsqlmodal.cpp
-qsqlmodal.h
-qsqlmodal.cpp
+        mnsql_modal.h
+        mnsql_modal.cpp
+        QSqlModal.h
+        QSqlModal.cpp
 cpp.h
 cpp.cpp
 cqdir.h
 cqdir.cpp
 cqStandardPaths.h
 cqStandardPaths.cpp
-)
+        qt_const.h)
 
 target_link_libraries(cqt PRIVATE Qt${QT_VERSION_MAJOR}::Widgets mnlibrary)
 target_compile_definitions(cqt PRIVATE CQT_LIBRARY)

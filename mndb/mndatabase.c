@@ -191,6 +191,30 @@ mndatabase *mndatabase_init_sqlite(mndatabase *db, char *db_path) {
     return db;
 }
 
+void mndatabase_start_transaction(mndatabase *db) {
+    if (db->driver==SQLITE){
+        mnsqlite_db_exec((sqlite3 *)db->connection,"BEGIN TRANSACTION;");
+    } else if (db->driver==MYSQL){
+
+    }
+}
+
+void mndatabase_commit(mndatabase *db) {
+    if (db->driver==SQLITE){
+        mnsqlite_db_exec((sqlite3 *)db->connection,"COMMIT;");
+    } else if (db->driver==MYSQL){
+
+    }
+}
+
+void mndatabase_rollback(mndatabase *db) {
+    if (db->driver==SQLITE){
+        mnsqlite_db_exec((sqlite3 *)db->connection,"ROLLBACK;");
+    } else if (db->driver==MYSQL){
+
+    }
+}
+
 /*
  *
  * SQL_TABLE

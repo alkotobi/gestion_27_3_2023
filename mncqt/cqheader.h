@@ -60,8 +60,5 @@ typedef void QObject ;
 #define QBoxLayout_TopToBottom 2//Vertical from top to bottom.
 #define QBoxLayout_BottomToTop 3//Vertical from bottom to top.
 
-
-
-
 //qInfo is qt5.5+ only.
 

@@ -28,11 +28,16 @@ char mndataset_t() {
 //                            VAR_I(i));
 //        mndataset_insert_v0(dataset,&r->super);
 //    }
-    tblusers_record_set_id(rec,VAR_I(6),0);
+    mnvariantList_set_all_dirty(&rec->super.var_list,0);
+    tblusers_record_set_id(rec,VAR_I(9),1);
     //rec->id= VAR_I(6);
-    tblusers_record_set_title(rec, VAR_S(str_cpy("mohamed")), 1);
+    tblusers_record_set_title(rec, VAR_S(str_cpy("salima")), 1);
+    tblusers_record_set_login(rec, VAR_S(str_cpy("sabrina")),1);
+    //mnvariantList_set_all_dirty(&rec->super.var_list,0);
 //    rec->title= str_cpy("tototo");
     mndataset_update(dataset,rec);
+    struct mnfilter* filter = mnfilter_init(0,OR, mnmetadata_list_item_at(dataset->meta_super->meta_list,Id)->name,GR_OR_EQ, VAR_I(10));
+    mndataset_delete_with_filter(dataset,filter);
     //mndataset_get_data(dataset);
 //    for (size_t i = 0; i <dataset->recordset->count ; ++i) {
 //        mnvariantList_printf(mnarray_item_at(dataset->recordset,i));

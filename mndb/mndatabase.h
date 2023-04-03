@@ -44,6 +44,9 @@ mndatabase* mndatabase_init_sqlite(mndatabase* db,char* db_path);//tested
 mndatabase* mndatabase_clean(mndatabase* database);
 char mndatabase_bind_params_and_exec(mndatabase *db, mnvariantList *params, char *sql);
 mnrecordset* mndatabase_bind_params_and_get_data(mndatabase *db, mnvariantList *params, char *sql);
+void mndatabase_start_transaction(mndatabase* db);
+void mndatabase_commit(mndatabase* db);
+void mndatabase_rollback(mndatabase* db);
 #ifdef __cplusplus
 }
 #endif
